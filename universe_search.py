@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Universe Search v2.1.4 - Production Ready Parallel Crystal Wrapper
-# Put this file in the same folder as universe_search_v10_4_observer_niches.py
+# Put this file in the same folder as universe_search_core.py
 
 import json
 import math
@@ -15,10 +15,10 @@ from pathlib import Path
 from concurrent.futures import ProcessPoolExecutor, as_completed
 
 try:
-    import universe_search_v10_4_observer_niches as base
+    import universe_search_core as base
 except Exception as e:
-    print('Could not import universe_search_v10_4_observer_niches.py')
-    print('Put this file in the same folder as your v10.4 script.')
+    print('Could not import universe_search_core.py')
+    print('Put this file in the same folder as universe_search.py')
     print('Import error:', repr(e))
     raise
 
@@ -849,6 +849,10 @@ def run_evolution_v20(score_mode='observer_niches', resume=False):
             observer_population, next_observer_id = base.evolve_observers(observer_population, top_metrics, next_observer_id)
             base.save_observers(observer_population)
 
+        if not clean_results:
+            print('No valid worlds in this generation.')
+            continue
+
         gen_best = clean_results[0]
         if best_ever is None or gen_best[0] > best_ever[0]:
             best_ever = gen_best
@@ -925,11 +929,11 @@ def main():
         root.mainloop()
     else:
         print('Universe Search v2.1.4.1 - parallel crystal defects wrapper')
-        print('Put this file next to universe_search_v10_4_observer_niches.py')
+        print('Put this file next to universe_search_core.py')
         print('Commands:')
-        print('  python universe_search_v21_4_1_parallel_crystal.py evolve observer_niches')
-        print('  python universe_search_v21_4_1_parallel_crystal.py resume observer_niches')
-        print('  python universe_search_v21_4_1_parallel_crystal.py view')
+        print('  python universe_search.py evolve observer_niches')
+        print('  python universe_search.py resume observer_niches')
+        print('  python universe_search.py view')
         print(f'Default workers: {WORKERS}')
 
 
