@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# Universe Search v2.1.4 - Production Ready Parallel Crystal Wrapper
+# Universe Search v2.1.4.1 - Production Ready Parallel Crystal Wrapper
 # Put this file in the same folder as universe_search_core.py
 
 import json
@@ -18,7 +18,7 @@ try:
     import universe_search_core as base
 except Exception as e:
     print('Could not import universe_search_core.py')
-    print('Put this file in the same folder as universe_search.py')
+    print('Put this file in the same folder as universe_search_core.py')
     print('Import error:', repr(e))
     raise
 
@@ -725,7 +725,7 @@ def detailed_console_line(i, rule, score, metrics):
         print(f'      observer: {note}')
 
 
-def run_evolution_v20(score_mode='observer_niches', resume=False):
+def run_evolution(score_mode='observer_niches', resume=False):
     global MAIN_PID
     MAIN_PID = os.getpid()
     os.environ['UNIVERSE_SEARCH_MAIN_PID'] = str(MAIN_PID)
@@ -911,14 +911,23 @@ def run_evolution_v20(score_mode='observer_niches', resume=False):
 def main():
     mode = sys.argv[1].lower() if len(sys.argv) > 1 else 'help'
     score_mode = sys.argv[2].lower() if len(sys.argv) > 2 else 'observer_niches'
+
     if score_mode not in base.SCORE_MODES:
+        print(f"Unknown score mode: {score_mode!r}. Falling back to 'observer_niches'.")
         score_mode = 'observer_niches'
+
     if mode in ('evolve', 'search'):
-        try: run_evolution_v20(score_mode, resume=False)
-        finally: save_crystal_cache()
+        try:
+            run_evolution(score_mode, resume=False)
+        finally:
+            save_crystal_cache()
+
     elif mode == 'resume':
-        try: run_evolution_v20(score_mode, resume=True)
-        finally: save_crystal_cache()
+        try:
+            run_evolution(score_mode, resume=True)
+        finally:
+            save_crystal_cache()
+
     elif mode == 'view':
         configure_base_paths()
         if base.tk is None:
@@ -927,14 +936,36 @@ def main():
         root = base.tk.Tk()
         base.Viewer(root)
         root.mainloop()
+
     else:
-        print('Universe Search v2.1.4.1 - parallel crystal defects wrapper')
-        print('Put this file next to universe_search_core.py')
-        print('Commands:')
+        print()
+        print('Universe Search v2.1.4.1')
+        print('=' * 55)
+        print('Experimental evolutionary search for artificial worlds.')
+        print()
+        print('Usage:')
         print('  python universe_search.py evolve observer_niches')
         print('  python universe_search.py resume observer_niches')
         print('  python universe_search.py view')
-        print(f'Default workers: {WORKERS}')
+        print()
+        print('Commands:')
+        print('  evolve   Start a new evolutionary search.')
+        print('  resume   Continue from the latest checkpoint.')
+        print('  view     Open the interactive viewer.')
+        print()
+        print('Score modes:')
+        for sm in base.SCORE_MODES:
+            suffix = '  (recommended)' if sm == 'observer_niches' else ''
+            print(f'  {sm}{suffix}')
+        print()
+        print('Examples:')
+        print('  python universe_search.py evolve')
+        print('  python universe_search.py evolve observer_niches')
+        print('  python universe_search.py resume observer_niches')
+        print()
+        print(f'Parallel workers : {WORKERS}')
+        print(f'Results folder   : {OUT_DIR}')
+        print('Core module      : universe_search_core.py')
 
 
 if __name__ == '__main__':
