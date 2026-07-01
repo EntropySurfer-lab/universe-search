@@ -148,3 +148,12 @@ observation_logs/
 This version explores what may be possible inside simple artificial rule spaces.
 
 The main question is not whether a world has the highest score, but whether it shows persistent, adaptive or information-preserving processes worth further investigation.
+
+## Planned Research
+
+- Risk-aware observers
+- Information transmission
+- Adaptive behaviour
+- Observer evolution
+- Cross-experiment analytics
+- Performance optimisation
