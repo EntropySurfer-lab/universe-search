@@ -794,7 +794,7 @@ def run_evolution(score_mode='observer_niches', resume=False):
             merge_crystal_into_main_cache(rule, metrics)
 
             vec = base.metric_feature_vector(metrics)
-            novelty_score = base.novelty_from_archive(vec, novelty_archive)
+            novelty_score = base.novelty_from_archive(vec, list(novelty_archive))
             in_gen_diversity = base.novelty_from_archive(vec, generation_vectors)
             generation_vectors.append(vec)
             metrics['novelty_behavior'] = novelty_score
