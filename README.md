@@ -137,7 +137,31 @@ Possible future work includes:
 - interactive Atlas browser
 
 ---
+## Running
 
+Start a new evolutionary search:
+
+```bash
+python universe_search.py evolve observer_niches
+```
+
+Resume from the latest checkpoint:
+
+```bash
+python universe_search.py resume observer_niches
+```
+
+Open the interactive world viewer:
+
+```bash
+python universe_search.py view
+```
+
+Show the built-in help:
+
+```bash
+python universe_search.py
+```
 ## License
 
 MIT
