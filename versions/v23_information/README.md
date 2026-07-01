@@ -151,9 +151,9 @@ The main question is not whether a world has the highest score, but whether it s
 
 ## Planned Research
 
-- Risk-aware observers
 - Information transmission
 - Adaptive behaviour
-- Observer evolution
+- Risk-aware observers
 - Cross-experiment analytics
+- Observer evolution
 - Performance optimisation
